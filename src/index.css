@@ -29,8 +29,19 @@ code {
 }
 
 #house-logo {
-  /* padding-bottom: 10px; */ 
+  /* padding-bottom: 5px;  */
 
+}
+
+.controls {
+  max-width: 800px;
+  margin: 50px auto;
+  overflow: auto;
+  min-height: 200px;
+  border: 1px solid #F2C4CE;
+  background-color: #F2C4CE;
+  padding: 30px;
+  border-radius: 20px;
 }
 
 .container {
