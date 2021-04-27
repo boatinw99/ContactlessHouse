@@ -1,13 +1,13 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Header";
-import Device from "./components/devicePane";
+import Controls from "./components/Controls";
 
 function App() {
   return (
     <div>
       <Header />
-      <Device />
+      <Controls />
     </div>
   );
 }
