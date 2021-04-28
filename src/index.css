@@ -32,9 +32,10 @@ code {
 
 .controls {
   max-width: 800px;
-  margin: 50px auto;
+  margin: 100px auto;
   overflow: auto;
   min-height: 200px;
+  max-height: 500px;
   border: 1px solid #f2c4ce;
   background-color: #f2c4ce;
   padding: 30px;
