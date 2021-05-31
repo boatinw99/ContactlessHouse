@@ -21,21 +21,79 @@ const firebaseConfig = {
   // messagingSenderId: "863008823567"
 };
 firebase.initializeApp(firebaseConfig);
-const  db = firebase.firestore();
+// const  db = firebase.firestore();
 
 function App() {
 
-  const [imTiredOfThisLang,setImTiredOfThisLang] = useState([])
-  const [doorTurnOn,setDoorTurnOn] = useState(false)
-  const [lightTurnOn,setLightTurnOn] = useState(true)
-  
+  const [database,setDatabase] = useState(
+  {
+  	brightness: 34, 
+  	door: "lock", 
+  	light1: "off", 
+  	light2: "off"
+  }
+  	)  
+
+  useEffect(() => {
+    const getData = async() => {
+      const tmp = await fetchData()
+      const data = tmp.data
+      // console log 
+      console.log(database)
+      setDatabase(data)
+    }
+    getData()
+  })
+
+ const fetchData = async() => {
+    const res = await fetch("https://api.netpie.io/v2/device/shadow/data?alias=NodeMCU", {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ZmNkYzhiNGUtNjkzYS00MmFkLWJjNTgtZjYyZDQ4NTYyYmJmOnlINU4zM2IxeFExaWdZbU5LWnB3NzJxQjkxQnhaRkJU', 
+      }
+    })
+    const data = res.json()
+    return data
+  }
+
+  const changeState = async(comp, msg) => {
+    const res = fetch("https://api.netpie.io/v2/device/message?topic="+comp, {
+      method: 'PUT',
+      headers: {
+        "Authorization": "Basic ZmNkYzhiNGUtNjkzYS00MmFkLWJjNTgtZjYyZDQ4NTYyYmJmOnlINU4zM2IxeFExaWdZbU5LWnB3NzJxQjkxQnhaRkJU" ,
+        "Content-Type": "text/plain",
+      },
+      body:msg,
+    })
+  }
+
+
+  // Yu's implementation
+  // const fetchDB = useCallback(async () => {
+  //   const querySnapshot = await db.collection("states").get()
+  //   console.log("DB",querySnapshot)
+  //   querySnapshot.docs.forEach((doc) => {
+  //       setDoorTurnOn(doc.data()["door"])
+  //       setLightTurnOn(doc.data()["light"])
+  //       setImTiredOfThisLang([...imTiredOfThisLang,doorTurnOn,lightTurnOn ])
+  //   });
+  // },[doorTurnOn,lightTurnOn,setDoorTurnOn,setLightTurnOn,setImTiredOfThisLang])
+
+  // useEffect(() => {
+  //   fetchDB()
+  // },[])
+
+
+  // db.collection("states").
+  // console.log(imTiredOfThisLang);
+  // console.log('lightTurnOn Last=', lightTurnOn);
+  // console.log('doorTurnOn Last=', doorTurnOn);
+
+
   return (
     <div className="App">
       <Header />
-      {`${doorTurnOn}`} 
-      <br/>
-      {`${lightTurnOn}`}
-      <Device lightTurnOn={lightTurnOn} doorTurnOn={doorTurnOn} />
+      <Device  database={database} onClick = {changeState}/>
       <History />
     </div>
   );

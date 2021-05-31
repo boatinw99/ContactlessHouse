@@ -4,17 +4,17 @@ import RoundPaper from "./RoundPaper";
 import openedDoor from "./door-opened.png";
 import { DoorSwitch, LightSwitch1, LightSwitch2, BrightnessBar } from "./Switch";
 import lightbulb from "./lightbulb.png";
-const Device = ({lightTurnOn, doorTurnOn}) => {
-  const [checked, setChecked] = React.useState(true);
+const Device = ({database, onClick}) => {
   return (
     <Grid container spacing={24}>
         <Grid item xs={6}>
-    <Box mt={2} mb={4} width="50%" alignContent="center" bgcolor="primary.main">
+    <Box mt={2} mb={4}>
       <RoundPaper
         style={{
           width: 300,
           height: 300,
           backgroundColor: "#f8bbd0",
+          marginLeft: 440
         }}
       >
         <img
@@ -24,29 +24,45 @@ const Device = ({lightTurnOn, doorTurnOn}) => {
           height="60"
           style={{ left: 60, top: 20, position: "relative" }}
         ></img>
-        <DoorSwitch lightTurnOn={lightTurnOn} doorTurnOn={doorTurnOn} />
+        <DoorSwitch database={database} onClick={onClick} />
         <img
           id="lightbulb"
           src={lightbulb}
           width="60"
           height="60"
-          style={{ right: 50, top: 120, position: "relative" }}
+          style={{ right: 45, top: 120, position: "relative" }}
         ></img>
-        <LightSwitch1 lightTurnOn={lightTurnOn} doorTurnOn={doorTurnOn} />
+        <LightSwitch1 database={database} onClick={onClick} />
         <img
           id="lightbulb"
           src={lightbulb}
           width="60"
           height="60"
-          style={{ right: 153, top: 220, position: "relative" }}
+          style={{ right: 150, top: 220, position: "relative" }}
         ></img>
-         <LightSwitch2 lightTurnOn={lightTurnOn} doorTurnOn={doorTurnOn} />
+          <LightSwitch2 database={database} onClick={onClick} />
       </RoundPaper>
     </Box>
     </Grid>
     <Grid item xs={6}>
-    <Box bgcolor="error.main">
-    <BrightnessBar brightness = "50"/>
+    <Box mt={2} mb={4}>
+    <RoundPaper
+        style={{
+          width: 200,
+          height: 300,
+          backgroundColor: "#f8bbd0",
+          marginRight: 480
+        }}
+      >
+        <BrightnessBar database={database}/>
+        <label style={{
+          right: 50,
+          top:100,
+          position: "relative"
+        }}>
+          Brightness
+        </label>
+      </RoundPaper>
     </Box>
     </Grid>
     </Grid>
