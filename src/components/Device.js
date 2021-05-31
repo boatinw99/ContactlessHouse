@@ -1,20 +1,19 @@
 import React, { useCallback, useState } from "react";
-import { List, ListItem, Box, Typography, Container, Grid } from "@material-ui/core";
+import { List, ListItem, Box, Typography, Container, Grid, colors } from "@material-ui/core";
 import RoundPaper from "./RoundPaper";
 import openedDoor from "./door-opened.png";
 import { DoorSwitch, LightSwitch1, LightSwitch2, BrightnessBar } from "./Switch";
 import lightbulb from "./lightbulb.png";
 const Device = ({database, onClick}) => {
   return (
-    <Grid container spacing={24}>
-        <Grid item xs={6}>
-    <Box mt={2} mb={4}>
+    <Box mt={2} mb={4} alignItems="center">
       <RoundPaper
         style={{
-          width: 300,
+          width: 550,
           height: 300,
           backgroundColor: "#f8bbd0",
-          marginLeft: 440
+          marginLeft: "auto",
+          marginRight: "auto"
         }}
       >
         <img
@@ -22,7 +21,7 @@ const Device = ({database, onClick}) => {
           src={openedDoor}
           width="60"
           height="60"
-          style={{ left: 60, top: 20, position: "relative" }}
+          style={{ left: 60, top: 0, position: "relative" }}
         ></img>
         <DoorSwitch database={database} onClick={onClick} />
         <img
@@ -30,7 +29,7 @@ const Device = ({database, onClick}) => {
           src={lightbulb}
           width="60"
           height="60"
-          style={{ right: 45, top: 120, position: "relative" }}
+          style={{ right: 45, top: 90, position: "relative" }}
         ></img>
         <LightSwitch1 database={database} onClick={onClick} />
         <img
@@ -38,34 +37,22 @@ const Device = ({database, onClick}) => {
           src={lightbulb}
           width="60"
           height="60"
-          style={{ right: 150, top: 220, position: "relative" }}
+          style={{ right: 150, top: 180, position: "relative" }}
         ></img>
           <LightSwitch2 database={database} onClick={onClick} />
-      </RoundPaper>
-    </Box>
-    </Grid>
-    <Grid item xs={6}>
-    <Box mt={2} mb={4}>
-    <RoundPaper
-        style={{
-          width: 200,
-          height: 300,
-          backgroundColor: "#f8bbd0",
-          marginRight: 480
-        }}
-      >
-        <BrightnessBar database={database}/>
+          <BrightnessBar database={database}/>
         <label style={{
-          right: 50,
-          top:100,
-          position: "relative"
+          left: 345,
+          top:50,
+          position: "relative",
+          fontSize: 20,
+          color: "#ffffff",
+          fontWeight: "bold"
         }}>
-          Brightness
+          BRIGHTNESS
         </label>
       </RoundPaper>
     </Box>
-    </Grid>
-    </Grid>
   );
 };
 export default Device;
