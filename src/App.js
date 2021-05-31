@@ -109,8 +109,6 @@ function App() {
     })
 
     const datetime = new Date().today() + " at " + new Date().timeNow(); 
-    
-    setLastMsg(`${comp} ${msg}`)
 
     db.collection("history").add({
         device: mapName[comp],
@@ -123,6 +121,8 @@ function App() {
     .catch((error) => {
         // console.error("Error adding document: ", error);
     });
+    
+    setLastMsg(`${comp} ${msg}`)
   }
 
   return (
