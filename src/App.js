@@ -8,7 +8,8 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 import {useEffect,useState,useCallback} from "react"
-import axios from "axios";
+// import axios from "axios";
+import background from './components/luxury-house-1.jpg'
 
 /// Code from stackoverflow to format time
 
@@ -44,14 +45,37 @@ const  db = firebase.firestore();
 
 function App() {
 
-  const [database,setDatabase] = useState(
-  {
-  	brightness: 34, 
-  	door: "lock", 
-  	light1: "off", 
-  	light2: "off"
-  }
-  	)  
+  const [database,setDatabase] = useState({
+    brightness: 34, 
+    door: "lock", 
+    light1: "off", 
+    light2: "off"
+  })
+
+  let history = []
+  const historyDelay = 2000
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      db.collection("history").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              history.push(doc.data())
+          });
+      });
+
+      history.sort(function compareFn(lhs, rhs) { 
+        const l = lhs['Time']
+        const r = lhs['Time']
+        return l<r 
+      })
+      history.reverse()
+      const numHistoryToShow = 5 
+      history = history.slice(0,numHistoryToShow-1)
+      // history.length = numHistoryToShow
+      console.log(history)
+    }, historyDelay)
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     const getData = async() => {
@@ -64,7 +88,7 @@ function App() {
     getData()
   })
 
- const fetchData = async() => {
+  const fetchData = async() => {
     const res = await fetch("https://api.netpie.io/v2/device/shadow/data?alias=NodeMCU", {
       method: 'GET',
       headers: {
@@ -85,45 +109,28 @@ function App() {
       body:msg,
     })
 
-	const datetime = new Date().today() + " at " + new Date().timeNow(); 
+    const datetime = new Date().today() + " at " + new Date().timeNow(); 
 
-	db.collection("history").add({
-	    device: mapName[comp],
-	    state: mapName[msg],
-	    Time: datetime,
-	})
-	.then((docRef) => {
-	    // console.log("Document written with ID: ", docRef.id);
-	})
-	.catch((error) => {
-	    // console.error("Error adding document: ", error);
-	});
+    db.collection("history").add({
+        device: mapName[comp],
+        state: mapName[msg],
+        Time: datetime,
+    })
+    .then((docRef) => {
+        // console.log("Document written with ID: ", docRef.id);
+    })
+    .catch((error) => {
+        // console.error("Error adding document: ", error);
+    });
   }
 
-  	let history = []
-
-	db.collection("history").get().then((querySnapshot) => {
-	    querySnapshot.forEach((doc) => {
-	        history.push(doc.data())
-	    });
-	});
-
-	history.sort(function compareFn(lhs, rhs) { 
-		const l = lhs['Time']
-		const r = lhs['Time']
-		return l<r 
-	})
-	history.reverse()
-	const numHistoryToShow = 5 
-	history = history.slice(0,numHistoryToShow-1)
-	// history.length = numHistoryToShow
-	console.log(history)
-
   return (
-    <div className="App">
-      <Header />
-      <Device  database={database} onClick = {changeState}/>
-      <History history={history}/>
+    <div class="App">
+      <div class="blur">
+        <Header />
+        <Device  database={database} onClick = {changeState}/>
+        <History history={history}/>
+      </div>
     </div>
   );
 }
