@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { List, ListItem, Box, Typography, Container } from "@material-ui/core";
 import RoundPaper from "./RoundPaper";
 import openedDoor from "./door-opened.png";
-import { DoorSwitch, LightSwitch } from "./Switch";
+import { DoorSwitch, LightSwitch1, LightSwitch2 } from "./Switch";
 import lightbulb from "./lightbulb.png";
 const Device = ({database, onClick}) => {
   return (
@@ -29,7 +29,15 @@ const Device = ({database, onClick}) => {
           height="80"
           style={{ right: 65, top: 200, position: "relative" }}
         ></img>
-        <LightSwitch database={database} onClick={onClick} />
+        <LightSwitch1 database={database} onClick={onClick} />
+        <img
+          id="lightbulb"
+          src={lightbulb}
+          width="80"
+          height="80"
+          style={{ right: 65, top: 200, position: "relative" }}
+        ></img>
+          <LightSwitch2 database={database} onClick={onClick} />
       </RoundPaper>
     </Box>
   );

@@ -44,7 +44,7 @@ function App() {
     getData()
   })
 
-  const fetchData = async() => {
+ const fetchData = async() => {
     const res = await fetch("https://api.netpie.io/v2/device/shadow/data?alias=NodeMCU", {
       method: 'GET',
       headers: {
@@ -64,10 +64,6 @@ function App() {
       },
       body:msg,
     })
-
-    // const data = await fetchData() 
-    // setDatabase(data.data)
-
   }
 
 

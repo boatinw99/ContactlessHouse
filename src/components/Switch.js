@@ -24,11 +24,11 @@ const LightSwitch1 = ({database, onClick}) => {
 };
 
 const LightSwitch2 = ({database, onClick}) => {
-  const on = (database.light1 === "on")
+  const on = (database.light2 === "on")
   return (
     <Switch
       checked={on}
-      onChange = {() => onClick("light1", on ? "off" : "on")}
+      onChange = {() => onClick("light2", on ? "off" : "on")}
 
       style={{ left: 75, top: 200 }}
     ></Switch>
@@ -36,5 +36,6 @@ const LightSwitch2 = ({database, onClick}) => {
 };
 
 export { DoorSwitch };
+// export { LightSwitch };
 export { LightSwitch1 };
 export { LightSwitch2 };
