@@ -9,7 +9,6 @@ import "firebase/firestore";
 
 import {useEffect,useState,useCallback} from "react"
 // import axios from "axios";
-import background from './components/luxury-house-1.jpg'
 
 /// Code from stackoverflow to format time
 
@@ -52,30 +51,30 @@ function App() {
     light2: "off"
   })
 
+  const [lastMsg,setLastMsg] = useState('')
+
   let history = []
-  const historyDelay = 2000
+  // const historyDelay = 2000
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      db.collection("history").get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              history.push(doc.data())
-          });
-      });
+    console.log("Try fetching history...")
+    db.collection("history").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            history.push(doc.data())
+        });
+    });
 
-      history.sort(function compareFn(lhs, rhs) { 
-        const l = lhs['Time']
-        const r = lhs['Time']
-        return l<r 
-      })
-      history.reverse()
-      const numHistoryToShow = 5 
-      history = history.slice(0,numHistoryToShow-1)
-      // history.length = numHistoryToShow
-      console.log(history)
-    }, historyDelay)
-    return () => clearInterval(interval)
-  }, [])
+    history.sort(function compareFn(lhs, rhs) { 
+      const l = lhs['Time']
+      const r = lhs['Time']
+      return l<r 
+    })
+    history.reverse()
+    const numHistoryToShow = 5 
+    history = history.slice(0,numHistoryToShow-1)
+    // history.length = numHistoryToShow
+    console.log(history)
+  }, [lastMsg])
 
   useEffect(() => {
     const getData = async() => {
@@ -110,6 +109,8 @@ function App() {
     })
 
     const datetime = new Date().today() + " at " + new Date().timeNow(); 
+    
+    setLastMsg(`${comp} ${msg}`)
 
     db.collection("history").add({
         device: mapName[comp],
@@ -125,8 +126,8 @@ function App() {
   }
 
   return (
-    <div class="App">
-      <div class="blur">
+    <div className="App">
+      <div className="blur">
         <Header />
         <Device  database={database} onClick = {changeState}/>
         <History history={history}/>
