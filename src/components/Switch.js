@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Switch } from "antd";
+import { Switch, Progress } from "antd";
 const DoorSwitch = ({database, onClick}) => {
   const lock = (database.door === "lock")
   return (
     <Switch
       checked={!lock}
       onChange = {() => onClick("door", lock ? "unlock" : "lock")}
-      style={{ left: 200, top: 30 }}
+      style={{ left: 130, top: 20 }}
     >
     </Switch>
   );
@@ -17,8 +17,7 @@ const LightSwitch1 = ({database, onClick}) => {
     <Switch
       checked={on}
       onChange = {() => onClick("light1", on ? "off" : "on")}
-
-      style={{ left: 75, top: 200 }}
+      style={{ left: 27, top: 120 }}
     ></Switch>
   );
 };
@@ -29,13 +28,28 @@ const LightSwitch2 = ({database, onClick}) => {
     <Switch
       checked={on}
       onChange = {() => onClick("light2", on ? "off" : "on")}
-
-      style={{ left: 75, top: 200 }}
+      style={{ left: 190, top: 180 }}
     ></Switch>
   );
 };
-
+const BrightnessBar = ({database}) => {
+  return (
+    <Progress
+     type = "dashboard"
+     gapDegree = "90"
+     percent = { parseInt(database.brightness,10) }
+     strokeColor={{
+      "0%": "#108ee9",
+      "100%": "#87d068"
+    }}
+    strokeWidth = "9"
+    style={{left: 40, top: 20, position:"relative"}}
+    strokeLinecap="square"
+     >
+    </Progress>
+  );
+};
 export { DoorSwitch };
-// export { LightSwitch };
 export { LightSwitch1 };
 export { LightSwitch2 };
+export { BrightnessBar };
