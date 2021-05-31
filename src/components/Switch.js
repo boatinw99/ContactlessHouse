@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Switch } from "antd";
-const DoorSwitch = () => {
-  let locked = false;
+const DoorSwitch = ({lightTurnOn, doorTurnOn}) => {
+  let locked = doorTurnOn;
   return (
     <Switch
       defaultChecked={locked}
@@ -12,14 +12,15 @@ const DoorSwitch = () => {
     ></Switch>
   );
 };
-const LightSwitch = () => {
-  let turnOn = false;
+const LightSwitch = ({lightTurnOn, doorTurnOn}) => {
+  let turnOn = lightTurnOn;
   return (
     <Switch
       defaultChecked={turnOn}
       onChange={(turnOn) => {
         turnOn = !turnOn;
       }}
+
       style={{ left: 75, top: 200 }}
     ></Switch>
   );
