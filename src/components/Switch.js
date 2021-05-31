@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Switch } from "antd";
 const DoorSwitch = ({database, onClick}) => {
-  let lock = (database.door === "lock")
+  const lock = (database.door === "lock")
   return (
     <Switch
       checked={!lock}

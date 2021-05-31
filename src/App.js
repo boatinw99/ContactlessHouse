@@ -9,7 +9,26 @@ import "firebase/firestore";
 
 import {useEffect,useState,useCallback} from "react"
 
+/// Code from stackoverflow to format time
 
+
+const mapName = new Map() 
+mapName['door'] = "Door"
+mapName['light1'] = "Light 1"
+mapName['light2'] = "Light 2"
+mapName['lock'] = "Lock"
+mapName['unlock'] = "Unlock"
+mapName['on'] = "On"
+mapName['off'] = "Off"
+
+Date.prototype.today = function () { 
+	return this.getFullYear() + "-" + (((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1)+ "-" + ((this.getDate() < 10)?"0":"") + this.getDate()
+}
+
+// For the time now
+Date.prototype.timeNow = function () {
+     return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
+}
 
 const firebaseConfig = {
   apiKey: "AIzaSyASlgzTKt0fmOIUeCHHMLd3KUNacJOOAS8",
@@ -20,7 +39,7 @@ const firebaseConfig = {
   // messagingSenderId: "863008823567"
 };
 firebase.initializeApp(firebaseConfig);
-// const  db = firebase.firestore();
+const  db = firebase.firestore();
 
 function App() {
 
@@ -38,7 +57,7 @@ function App() {
       const tmp = await fetchData()
       const data = tmp.data
       // console log 
-      console.log(database)
+      // console.log(database)
       setDatabase(data)
     }
     getData()
@@ -64,36 +83,46 @@ function App() {
       },
       body:msg,
     })
+
+	const datetime = new Date().today() + " at " + new Date().timeNow(); 
+
+	db.collection("history").add({
+	    device: mapName[comp],
+	    state: mapName[msg],
+	    Time: datetime,
+	})
+	.then((docRef) => {
+	    // console.log("Document written with ID: ", docRef.id);
+	})
+	.catch((error) => {
+	    // console.error("Error adding document: ", error);
+	});
   }
 
+  	let history = []
 
-  // Yu's implementation
-  // const fetchDB = useCallback(async () => {
-  //   const querySnapshot = await db.collection("states").get()
-  //   console.log("DB",querySnapshot)
-  //   querySnapshot.docs.forEach((doc) => {
-  //       setDoorTurnOn(doc.data()["door"])
-  //       setLightTurnOn(doc.data()["light"])
-  //       setImTiredOfThisLang([...imTiredOfThisLang,doorTurnOn,lightTurnOn ])
-  //   });
-  // },[doorTurnOn,lightTurnOn,setDoorTurnOn,setLightTurnOn,setImTiredOfThisLang])
+	db.collection("history").get().then((querySnapshot) => {
+	    querySnapshot.forEach((doc) => {
+	        history.push(doc.data())
+	    });
+	});
 
-  // useEffect(() => {
-  //   fetchDB()
-  // },[])
-
-
-  // db.collection("states").
-  // console.log(imTiredOfThisLang);
-  // console.log('lightTurnOn Last=', lightTurnOn);
-  // console.log('doorTurnOn Last=', doorTurnOn);
-
+	history.sort(function compareFn(lhs, rhs) { 
+		const l = lhs['Time']
+		const r = lhs['Time']
+		return l<r 
+	})
+	history.reverse()
+	const numHistoryToShow = 5 
+	history = history.slice(0,numHistoryToShow-1)
+	// history.length = numHistoryToShow
+	console.log(history)
 
   return (
     <div className="App">
       <Header />
       <Device  database={database} onClick = {changeState}/>
-      <History />
+      <History history={history}/>
     </div>
   );
 }
