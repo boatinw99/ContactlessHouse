@@ -4,8 +4,7 @@ import RoundPaper from "./RoundPaper";
 import openedDoor from "./door-opened.png";
 import { DoorSwitch, LightSwitch } from "./Switch";
 import lightbulb from "./lightbulb.png";
-const Device = ({lightTurnOn, doorTurnOn}) => {
-  const [checked, setChecked] = React.useState(true);
+const Device = ({database, onClick}) => {
   return (
     <Box mt={2} mb={4} width="100%" alignContent="center">
       <RoundPaper
@@ -22,7 +21,7 @@ const Device = ({lightTurnOn, doorTurnOn}) => {
           height="80"
           style={{ left: 60, top: 20, position: "relative" }}
         ></img>
-        <DoorSwitch lightTurnOn={lightTurnOn} doorTurnOn={doorTurnOn} />
+        <DoorSwitch database={database} onClick={onClick} />
         <img
           id="lightbulb"
           src={lightbulb}
@@ -30,7 +29,7 @@ const Device = ({lightTurnOn, doorTurnOn}) => {
           height="80"
           style={{ right: 65, top: 200, position: "relative" }}
         ></img>
-        <LightSwitch lightTurnOn={lightTurnOn} doorTurnOn={doorTurnOn} />
+        <LightSwitch database={database} onClick={onClick} />
       </RoundPaper>
     </Box>
   );
