@@ -1,4 +1,4 @@
-// import logo from "./logo.svg";
+t// import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Header";
 import History from "./components/History"
@@ -100,30 +100,34 @@ function App() {
 	});
   }
 
-  	let history = []
 
-	db.collection("history").get().then((querySnapshot) => {
-	    querySnapshot.forEach((doc) => {
-	        history.push(doc.data())
-	    });
-	});
+	// const [historyList,setHistoryList] = []
 
-	history.sort(function compareFn(lhs, rhs) { 
-		const l = lhs['Time']
-		const r = lhs['Time']
-		return l<r 
-	})
-	history.reverse()
-	const numHistoryToShow = 5 
-	history = history.slice(0,numHistoryToShow-1)
-	// history.length = numHistoryToShow
-	console.log(history)
+ //  let history = []
+
+	// db.collection("history").get().then((querySnapshot) => {
+	//     querySnapshot.forEach((doc) => {
+	//         history.push(doc.data())
+	//     });
+	// });
+
+	// history.sort(function compareFn(lhs, rhs) { 
+	// 	const l = lhs['Time']
+	// 	const r = lhs['Time']
+	// 	return l<r 
+	// })
+	// history.reverse()
+	// const numHistoryToShow = 5 
+	// setHistoryList(history.slice(0,numHistoryToShow-1))
+
+	// // history.length = numHistoryToShow
+	// console.log(historyList)
 
   return (
     <div className="App">
       <Header />
       <Device  database={database} onClick = {changeState}/>
-      <History history={history}/>
+      <History historyList={history}/>
     </div>
   );
 }
