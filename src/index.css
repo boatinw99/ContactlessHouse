@@ -7,6 +7,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  height: 100%;
+}
+
+.App {
+  background-image: url("./components/luxury-house-1.jpg");
+  height: 100vh;
+  background-size: cover;
+}
+
+.blur {
+  backdrop-filter: blur(6px);
+  height: 100vh;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -20,7 +35,7 @@ code {
   overflow: auto;
   min-height: 155px;
   padding: 20px;
-  background-color: darkgrey;
+  background-color: rgba(164, 183, 237, 0.253);
   text-align: center;
 
   /* display: flex; */
@@ -40,8 +55,6 @@ code {
   position: "absolute";
   background-color: white;
 }
-
-
 
 .controls {
 /* <<<<<<< HEAD */

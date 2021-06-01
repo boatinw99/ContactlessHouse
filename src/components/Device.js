@@ -11,9 +11,9 @@ const Device = ({database, onClick}) => {
         style={{
           width: 550,
           height: 300,
-          backgroundColor: "#f8bbd0",
+          background: "rgba(164, 184, 237, 0.8)",
           marginLeft: "auto",
-          marginRight: "auto"
+          marginRight: "auto",
         }}
       >
         <img
