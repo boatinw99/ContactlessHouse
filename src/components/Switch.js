@@ -6,7 +6,7 @@ const DoorSwitch = ({database, onClick}) => {
     <Switch
       checked={!lock}
       onChange = {() => onClick("door", lock ? "unlock" : "lock")}
-      style={{ left: 130, top: 20 }}
+      style={{ left: 130, top: 0 }}
     >
     </Switch>
   );
@@ -17,7 +17,7 @@ const LightSwitch1 = ({database, onClick}) => {
     <Switch
       checked={on}
       onChange = {() => onClick("light1", on ? "off" : "on")}
-      style={{ left: 27, top: 120 }}
+      style={{ left: 27, top: 90 }}
     ></Switch>
   );
 };
@@ -28,7 +28,7 @@ const LightSwitch2 = ({database, onClick}) => {
     <Switch
       checked={on}
       onChange = {() => onClick("light2", on ? "off" : "on")}
-      style={{ left: 190, top: 180 }}
+      style={{ right: 78, top: 180 }}
     ></Switch>
   );
 };
@@ -43,7 +43,7 @@ const BrightnessBar = ({database}) => {
       "100%": "#87d068"
     }}
     strokeWidth = "9"
-    style={{left: 40, top: 20, position:"relative"}}
+    style={{left: 40, top: 40, position:"relative"}}
     strokeLinecap="square"
      >
     </Progress>
