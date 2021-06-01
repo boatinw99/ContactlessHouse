@@ -54,34 +54,43 @@ function App() {
   const [lastMsg,setLastMsg] = useState('')
 
   const [historyList,setHistoryList] = useState([
-    {"Time":"1-Jun-2021", "device": "Door", "state": "On"},
-    {"Time":"1-Jun-2021", "device": "Light 2", "state": "Off"},
-    {"Time":"1-Jun-2021", "device": "Light 1", "state": "On"},
-    {"Time":"1-Jun-2021", "device": "Door", "state": "Off"},
-    {"Time":"1-Jun-2021", "device": "Door", "state": "On"}
+    {"Time":"2021-06-01 at 15:07:15", "device": "Door", "state": "Off"},
+    {"Time":"2021-06-01 at 17:07:15", "device": "Door", "state": "On"},
+    {"Time":"2021-06-01 at 17:04:15", "device": "Door", "state": "On"},
+    {"Time":"2021-06-02 at 17:07:15", "device": "Light 2", "state": "Off"},
+    {"Time":"2021-06-01 at 17:07:10", "device": "Light 1", "state": "On"}
     ])
-  let history = []
   // const historyDelay = 2000
 
-  useEffect(() => {
-    console.log("Try fetching history...")
-    db.collection("history").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            history.push(doc.data())
-        });
-    });
+  useEffect(async () => {
+    let history = []
+    
+    console.log("Try fetching history...") 
 
-    history.sort(function compareFn(lhs, rhs) { 
-      const l = lhs['Time']
-      const r = rhs['Time']
-      return l<r 
+    const hist = db.collection("history")
+    const snapshot = await hist.where('device', 'in', ['Door', 'Light 1', 'Light 2']).get()
+    snapshot.forEach(doc => {
+      history.push(doc.data())
+    })
+
+    history.sort(function(lhs, rhs) { 
+      if (lhs.Time < rhs.Time) {
+        return -1
+      }
+      if (lhs.Time > rhs.Time) {
+        return 1
+      }
+      return 0
     })
     history.reverse()
+
     const numHistoryToShow = 5 
-    history = history.slice(0,numHistoryToShow-1)
+    history = history.slice(0, numHistoryToShow)
+
+    console.log(history)
+    // history = historyList
     setHistoryList(history)
     // history.length = numHistoryToShow
-    console.log(history)
   }, [lastMsg])
 
   useEffect(() => { 
