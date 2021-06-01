@@ -53,54 +53,42 @@ function App() {
 
   const [lastMsg,setLastMsg] = useState('')
 
-  const [historyList,setHistoryList] = useState([
-    {"Time":"2021-06-01 at 17:55:32", "device": "Door", "state": "On"},
-    {"Time":"2021-06-01 at 17:10:40", "device": "Door", "state": "Off"},
-    {"Time":"2021-06-01 at 17:31:40", "device": "Door", "state": "On"},
-    {"Time":"2021-06-01 at 17:02:40", "device": "Door", "state": "Off"},
-    {"Time":"2021-06-01 at 17:03:40", "device": "Door", "state": "On"},
-    ])
-  // let history = []
-  // const [history,setHistoryList] = useState()
-  // const historyDelay = 2000
+  const [historyList,setHistoryList] = useState([])
 
-
-  useEffect(() => {
+  useEffect(async () => {
     let history = []
-    setHistoryList([])
-    console.log("Try fetching history...")
-    const snapshot = await db.collection("history").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // history.push(doc.data())
-            setHistoryList([...historyList, doc.data()])
-        });
-    });
-    console.log(historyList)
-    // setHistoryList(history)
-    // console.log("1111111111")
-    // console.log(history)
-    // console.log("22222222")
-    const sorted = historyList.sort(function compareFn(lhs, rhs) { 
-      const l = lhs.Time
-      const r = rhs.Time
-      const tmp = (r>l) ? 1:-1
-      return tmp
+    
+    console.log("Try fetching history...") 
+
+    const hist = db.collection("history")
+    const snapshot = await hist.where('device', 'in', ['Door', 'Light 1', 'Light 2']).get()
+    snapshot.forEach(doc => {
+      history.push(doc.data())
     })
-    setHistoryList(sorted)
+
+    history.sort(function(lhs, rhs) { 
+      if (lhs.Time < rhs.Time) {
+        return -1
+      }
+      if (lhs.Time > rhs.Time) {
+        return 1
+      }
+      return 0
+    })
+    history.reverse()
+
     const numHistoryToShow = 5 
-    // history = history.slice(0,numHistoryToShow-1)
-    // setHistoryList(history)
-    // history.length = numHistoryToShow
-    console.log(sorted)
-    console.log(historyList)
+    history = history.slice(0, numHistoryToShow)
+
+    console.log(history)
+    setHistoryList(history)
   }, [lastMsg])
 
   useEffect(() => { 
     const getData = async() => {
       const tmp = await fetchData()
       const data = tmp.data
-      // console log 
-      // console.log(database)
+      console.log(database)
       setDatabase(data)
     }
     getData()
@@ -144,22 +132,7 @@ function App() {
     setLastMsg(`${comp} ${msg}`)
   }
 
-  // let test = [
-  //   {"Time":"2021-06-01 at 17:50:40", "device": "Door", "state": "On"},
-  //   {"Time":"2021-06-01 at 17:00:40", "device": "Door", "state": "Off"},
-  //   {"Time":"2021-06-01 at 17:41:40", "device": "Door", "state": "On"},
-  //   {"Time":"2021-06-01 at 17:02:40", "device": "Door", "state": "Off"},
-  //   {"Time":"2021-06-01 at 17:03:40", "device": "Door", "state": "On"},
-  //   ]
-  //   console.log(test)
-  // test.sort(function compareFn(lhs, rhs) { 
-  //     const l = lhs.Time
-  //     const r = rhs.Time
-  //     const tmp = (r>l) ? 1:-1
-  //     return tmp
-  //   })
-
-  return (
+    return (
     <div className="App">
       <div className="blur">
         <Header />
