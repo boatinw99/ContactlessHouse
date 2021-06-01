@@ -76,24 +76,30 @@ code {
 }
 
 .history {
-  width: 947px;
+  width: 400px;
   height: 200px;
   margin: 50px auto;
   overflow: auto;
-  border: 1px solid #f58f7c;
-  background-color: #f58f7c;
-  padding: 30px;
+  /*padding: 30px;*/
   border-radius: 20px;
 }
 
+.history h1 {
+  color: #f4f4f4;
+  padding: 5px 10px;
+}
+
 .hist {
-  background: #f4f4f4;
+  color: #f4f4f4;
+  border-radius: 10px;
+  /*background: #5576d1;*/
+  background: #6495ed;
   margin: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
+  padding: 5px 10px;
 }
 
 .hist h3 {
+  color: #f4f4f4;
   display: flex;
   align-items: center;
   justify-content: space-between;
