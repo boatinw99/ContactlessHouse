@@ -10,7 +10,7 @@ function History({historyList}) {
         >
             { historyList.map((hist,index) => (
                 <div className="hist">
-                <h3>{hist.Device}</h3>
+                <h3>{hist.device}</h3>
                 <p>{hist.Time} {hist.state}</p>
 
                 </div>

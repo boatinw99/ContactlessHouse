@@ -54,11 +54,11 @@ function App() {
   const [lastMsg,setLastMsg] = useState('')
 
   const [historyList,setHistoryList] = useState([
-    {"Time":"1-Jun-2021", "Device": "Door", "state": "On"},
-    {"Time":"1-Jun-2021", "Device": "Light 2", "state": "Off"},
-    {"Time":"1-Jun-2021", "Device": "Light 1", "state": "On"},
-    {"Time":"1-Jun-2021", "Device": "Door", "state": "Off"},
-    {"Time":"1-Jun-2021", "Device": "Door", "state": "On"}
+    {"Time":"1-Jun-2021", "device": "Door", "state": "On"},
+    {"Time":"1-Jun-2021", "device": "Light 2", "state": "Off"},
+    {"Time":"1-Jun-2021", "device": "Light 1", "state": "On"},
+    {"Time":"1-Jun-2021", "device": "Door", "state": "Off"},
+    {"Time":"1-Jun-2021", "device": "Door", "state": "On"}
     ])
   let history = []
   // const historyDelay = 2000
@@ -73,13 +73,13 @@ function App() {
 
     history.sort(function compareFn(lhs, rhs) { 
       const l = lhs['Time']
-      const r = lhs['Time']
+      const r = rhs['Time']
       return l<r 
     })
     history.reverse()
     const numHistoryToShow = 5 
     history = history.slice(0,numHistoryToShow-1)
-    // setHistoryList(history)
+    setHistoryList(history)
     // history.length = numHistoryToShow
     console.log(history)
   }, [lastMsg])
@@ -89,7 +89,7 @@ function App() {
       const tmp = await fetchData()
       const data = tmp.data
       // console log 
-      console.log(database)
+      // console.log(database)
       setDatabase(data)
     }
     getData()
