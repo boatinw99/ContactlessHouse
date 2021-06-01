@@ -54,34 +54,45 @@ function App() {
   const [lastMsg,setLastMsg] = useState('')
 
   const [historyList,setHistoryList] = useState([
-    {"Time":"1-Jun-2021", "device": "Door", "state": "On"},
-    {"Time":"1-Jun-2021", "device": "Light 2", "state": "Off"},
-    {"Time":"1-Jun-2021", "device": "Light 1", "state": "On"},
-    {"Time":"1-Jun-2021", "device": "Door", "state": "Off"},
-    {"Time":"1-Jun-2021", "device": "Door", "state": "On"}
+    {"Time":"2021-06-01 at 17:55:32", "device": "Door", "state": "On"},
+    {"Time":"2021-06-01 at 17:10:40", "device": "Door", "state": "Off"},
+    {"Time":"2021-06-01 at 17:31:40", "device": "Door", "state": "On"},
+    {"Time":"2021-06-01 at 17:02:40", "device": "Door", "state": "Off"},
+    {"Time":"2021-06-01 at 17:03:40", "device": "Door", "state": "On"},
     ])
-  let history = []
+  // let history = []
+  // const [history,setHistoryList] = useState()
   // const historyDelay = 2000
 
+
   useEffect(() => {
+    let history = []
+    setHistoryList([])
     console.log("Try fetching history...")
-    db.collection("history").get().then((querySnapshot) => {
+    const snapshot = await db.collection("history").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-            history.push(doc.data())
+            // history.push(doc.data())
+            setHistoryList([...historyList, doc.data()])
         });
     });
-
-    history.sort(function compareFn(lhs, rhs) { 
-      const l = lhs['Time']
-      const r = rhs['Time']
-      return l<r 
+    console.log(historyList)
+    // setHistoryList(history)
+    // console.log("1111111111")
+    // console.log(history)
+    // console.log("22222222")
+    const sorted = historyList.sort(function compareFn(lhs, rhs) { 
+      const l = lhs.Time
+      const r = rhs.Time
+      const tmp = (r>l) ? 1:-1
+      return tmp
     })
-    history.reverse()
+    setHistoryList(sorted)
     const numHistoryToShow = 5 
-    history = history.slice(0,numHistoryToShow-1)
-    setHistoryList(history)
+    // history = history.slice(0,numHistoryToShow-1)
+    // setHistoryList(history)
     // history.length = numHistoryToShow
-    console.log(history)
+    console.log(sorted)
+    console.log(historyList)
   }, [lastMsg])
 
   useEffect(() => { 
@@ -132,6 +143,21 @@ function App() {
     
     setLastMsg(`${comp} ${msg}`)
   }
+
+  // let test = [
+  //   {"Time":"2021-06-01 at 17:50:40", "device": "Door", "state": "On"},
+  //   {"Time":"2021-06-01 at 17:00:40", "device": "Door", "state": "Off"},
+  //   {"Time":"2021-06-01 at 17:41:40", "device": "Door", "state": "On"},
+  //   {"Time":"2021-06-01 at 17:02:40", "device": "Door", "state": "Off"},
+  //   {"Time":"2021-06-01 at 17:03:40", "device": "Door", "state": "On"},
+  //   ]
+  //   console.log(test)
+  // test.sort(function compareFn(lhs, rhs) { 
+  //     const l = lhs.Time
+  //     const r = rhs.Time
+  //     const tmp = (r>l) ? 1:-1
+  //     return tmp
+  //   })
 
   return (
     <div className="App">
