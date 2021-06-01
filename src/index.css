@@ -73,6 +73,22 @@ code {
   border-radius: 20px;
 }
 
+.hist {
+  background: #f4f4f4;
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.hist h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+
 .container {
   max-width: 500px;
   margin: 30px auto;

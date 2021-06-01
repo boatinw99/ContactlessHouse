@@ -1,4 +1,4 @@
-t// import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Header";
 import History from "./components/History"
@@ -53,7 +53,7 @@ function App() {
   }
   	)  
 
-  useEffect(() => {
+  useEffect(() => { 
     const getData = async() => {
       const tmp = await fetchData()
       const data = tmp.data
@@ -62,7 +62,7 @@ function App() {
       setDatabase(data)
     }
     getData()
-  })
+  }) // note 
 
  const fetchData = async() => {
     const res = await fetch("https://api.netpie.io/v2/device/shadow/data?alias=NodeMCU", {
@@ -105,11 +105,11 @@ function App() {
 
  //  let history = []
 
-	// db.collection("history").get().then((querySnapshot) => {
-	//     querySnapshot.forEach((doc) => {
-	//         history.push(doc.data())
-	//     });
-	// });
+	db.collection("history").get().then((querySnapshot) => {
+	    querySnapshot.forEach((doc) => {
+	        history.push(doc.data())
+	    });
+	});
 
 	// history.sort(function compareFn(lhs, rhs) { 
 	// 	const l = lhs['Time']
@@ -127,7 +127,7 @@ function App() {
     <div className="App">
       <Header />
       <Device  database={database} onClick = {changeState}/>
-      <History historyList={history}/>
+      <History /> 
     </div>
   );
 }
