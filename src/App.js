@@ -95,7 +95,7 @@ function App() {
   }) //note
 
   const fetchData = async() => {
-    const res = await fetch("https://api.netpie.io/v2/device/shadow/data?alias=NodeMCU", {
+    const res = await fetch("https://api.netpie.io/v2/device/shadow/data?alias=81ed15facc20021f2cfa9896533d7498", {
       method: 'GET',
       headers: {
         'Authorization': 'Basic ZmNkYzhiNGUtNjkzYS00MmFkLWJjNTgtZjYyZDQ4NTYyYmJmOnlINU4zM2IxeFExaWdZbU5LWnB3NzJxQjkxQnhaRkJU', 
